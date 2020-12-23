@@ -7,6 +7,15 @@
 import random
 import itertools as it
 
+# Quicksort's best case time complexity is O(nlogn)
+# worst case = O(n^2)
+# average = (nlogn)
+# Worst case happens when we always choose either the minimum
+# or maximum value as the pivot.
+
+# SPACE COMPLEXITY
+# O(logn) -- logn calls on the call stack
+
 
 # sorts an array in place starting at the begin index and ending
 # at the end index
@@ -30,6 +39,12 @@ def partition(arr, begin, end, option):
     final_pivot_index = lessThanPivot + 1
     return final_pivot_index
 
+# I made this method to allow options for various choices between
+# just using the item at the end, using the median of three approach,
+# and using a random pivot.
+# Median of three is considered fastest.
+# Both median of three and random require O(1) time to return an pivot index,
+# but the random operation is a larger constant.
 def choose_pivot(arr, begin, end, option):
     if (option != 1 and option != 2 and option != 3):
         return end
