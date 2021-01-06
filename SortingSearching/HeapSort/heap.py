@@ -65,41 +65,75 @@ class MinHeap:
             index = self.parent(index)
         return
 
+    # PURPOSE
+    # Determine if a given position has a left child.
+    # SIGNATURE
+    # has_left_child :: Integer => Boolean
     def has_left_child(self, index):
         return self.left_child(index) < len(self.heap)
 
+    # PURPOSE
+    # Determine if a given position has a right child.
+    # SIGNATURE
+    # has_right_child :: Integer => Boolean
     def has_right_child(self, index):
         return self.left_child(index) < len(self.heap)
 
+    # PURPOSE
+    # Given the index of a value that violates the heap property,
+    # bubble the value at the given index down to its correct position.
+    # SIGNATURE
+    # heapify :: Integer => None
     def heapify(self, index):
         min = index
         curr_pos = index
-        while(self.has_left_child(index) and self.has_right_child(curr_pos)):
+        while(self.has_left_child(index) and self.has_right_child(curr_pos) and curr_pos != -1):
             if self.heap[curr_pos] > self.heap[self.left_child(curr_pos)]:
                 min = self.left_child(curr_pos)
-            if self.heap[curr_pos] > self.heap[self.right_child(curr_pos)]:
+            if self.heap[min] > self.heap[self.right_child(curr_pos)]:
                 min = self.right_child(curr_pos)
             if min == curr_pos:
                 break
             self.swap(min, curr_pos)
             curr_pos = min
-        if self.has_left_child(curr_pos):
+        if self.has_left_child(curr_pos) and curr_pos != -1:
             if self.heap[curr_pos] > self.heap[self.left_child(curr_pos)]:
                 self.swap(curr_pos, self.left_child(curr_pos))
         return
 
+    # PURPOSE
+    # Delete and return the item at the top of the heap.
+    # SIGNATURE
+    # delete :: None => Integer
+    # TIME AND SPACE COMPLEXITY
+    # time = O(lgn) for one call to heapify
+    # space = O(1)
     def delete(self):
+        min = self.get_min()
         self.swap(0, len(self.heap) - 1)
         self.heap = self.heap[:len(self.heap) - 1]
         self.heapify(0)
-        return
+        return min
 
+    # PURPOSE
+    # Get the minimum item in the heap.
+    # SIGNATURE
+    # get_min :: None => Integer
+    # TIME AND SPACE COMPLEXITY
+    # time = O(1) space = O(1)
     def get_min(self):
-        return self.heap(0)
+        return self.heap[0]
 
-test_list = list(range(21))
+# test_list = list(range(21))
+# test_heap = MinHeap(test_list)
+# test_heap.delete()
+# print(test_heap.heap)
+# test_heap.delete()
+# print(test_heap.heap)
+# test_heap.delete()
+# print(test_heap.heap)
+
+test_list = [-4, 70, 12, 71, 99, 15, 19, 72, 100, 17, 21, 88, 500]
 test_heap = MinHeap(test_list)
-test_heap.insert(-1)
-print(test_heap.heap)
-test_heap.insert(3)
+test_heap.delete()
 print(test_heap.heap)

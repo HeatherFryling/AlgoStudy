@@ -69,3 +69,28 @@ def test_insert():
     # Adding a value in the middle
     test_heap.insert(3)
     assert([-1, 0, 2, 3, 1, 5, 6, 7, 8, 9, 3, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 10, 4] == test_heap.heap)
+
+def test_delete():
+    test_list = list(range(21))
+    test_heap = MinHeap(test_list)
+
+    assert(0 in test_heap.heap)
+    min = test_heap.delete()
+    assert(0 == min)
+    assert(0 not in test_heap.heap)
+    assert([1, 3, 2, 7, 4, 5, 6, 15, 8, 9, 10, 11, 12, 13, 14, 19, 16, 17, 18, 20] == test_heap.heap)
+
+    min = test_heap.delete()
+    assert(1 == min)
+    assert(1 not in test_heap.heap)
+    assert([2, 3, 5, 7, 4, 11, 6, 15, 8, 9, 10, 18, 12, 13, 14, 19, 16, 17, 20] == test_heap.heap)
+
+    min = test_heap.delete()
+    assert(2 == min)
+    assert(2 not in test_heap.heap)
+    assert([3, 4, 5, 7, 9, 11, 6, 15, 8, 17, 10, 18, 12, 13, 14, 19, 16, 20] == test_heap.heap)
+
+def test_delete2():
+    test_list = [-4, 70, 12, 71, 99, 15, 19, 72, 100, 17, 21, 88, 500]
+    test_heap = MinHeap(test_list)
+    assert(-4 == test_heap.delete())
