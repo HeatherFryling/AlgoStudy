@@ -53,3 +53,19 @@ def test_right_child():
     assert(test_heap.right_child(7) == 16)
     assert(test_heap.right_child(8) == 18)
     assert(test_heap.right_child(9) == -1)
+
+def test_insert():
+    test_list = list(range(20))
+    test_heap = MinHeap(test_list)
+
+    # Adding a value on the end.
+    test_heap.insert(20)
+    assert(list(range(21)) == test_heap.heap)
+
+    # Adding a value at the root.
+    test_heap.insert(-1)
+    assert([-1, 0, 2, 3, 1, 5, 6, 7, 8, 9, 4, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 10] == test_heap.heap)
+
+    # Adding a value in the middle
+    test_heap.insert(3)
+    assert([-1, 0, 2, 3, 1, 5, 6, 7, 8, 9, 3, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 10, 4] == test_heap.heap)
