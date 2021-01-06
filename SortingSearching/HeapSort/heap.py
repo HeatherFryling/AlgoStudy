@@ -1,6 +1,8 @@
 # Heather Fryling
 # 1/5/2021
 # Minheap as explained by Zhifeng Sun
+# I altered heapify from recursive to iterative
+# to save space on the call stack.
 # CS5800 Northeastern University, Seattle
 
 class MinHeap:
@@ -63,14 +65,37 @@ class MinHeap:
             index = self.parent(index)
         return
 
-    def delete(self, val):
+    def has_left_child(self, index):
+        return self.left_child(index) < len(self.heap)
+
+    def has_right_child(self, index):
+        return self.left_child(index) < len(self.heap)
+
+    def heapify(self, index):
+        min = index
+        curr_pos = index
+        while(self.has_left_child(index) and self.has_right_child(curr_pos)):
+            if self.heap[curr_pos] > self.heap[self.left_child(curr_pos)]:
+                min = self.left_child(curr_pos)
+            if self.heap[curr_pos] > self.heap[self.right_child(curr_pos)]:
+                min = self.right_child(curr_pos)
+            if min == curr_pos:
+                break
+            self.swap(min, curr_pos)
+            curr_pos = min
+        if self.has_left_child(curr_pos):
+            if self.heap[curr_pos] > self.heap[self.left_child(curr_pos)]:
+                self.swap(curr_pos, self.left_child(curr_pos))
         return
 
-    def heapify(self, arr):
+    def delete(self):
+        self.swap(0, len(self.heap) - 1)
+        self.heap = self.heap[:len(self.heap) - 1]
+        self.heapify(0)
         return
 
     def get_min(self):
-        return
+        return self.heap(0)
 
 test_list = list(range(21))
 test_heap = MinHeap(test_list)
