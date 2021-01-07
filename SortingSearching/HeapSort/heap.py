@@ -14,7 +14,7 @@ class MinHeap:
     # MinHeap() :: self, List => None
     def __init__(self, heap=[]):
         self.size = len(heap)
-        self.heap = heap
+        self.heap = self.build_heap(heap)
 
     # PURPOSE
     # Swap the values at indices i and j in the heap.
@@ -101,7 +101,6 @@ class MinHeap:
                 self.swap(arr, curr_pos, min)
                 curr_pos = min
         if self.has_left_child(arr, curr_pos):
-        # Add a test for this branch
             if arr[curr_pos] > arr[self.left_child(arr, curr_pos)]:
                 self.swap(arr, curr_pos, self.left_child(arr, curr_pos))
         return
@@ -134,6 +133,6 @@ class MinHeap:
     # SIGNATURE
     # build_heap :: List => None
     def build_heap(self, arr):
-        for i in range((len(arr) - 1) / 2, -1, -1):
+        for i in range((len(arr) - 1) // 2, -1, -1):
             self.heapify(arr, i)
-        return
+        return arr

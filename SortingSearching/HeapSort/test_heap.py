@@ -91,7 +91,25 @@ def test_delete():
     assert([3, 4, 5, 7, 9, 11, 6, 15, 8, 18, 10, 19, 12, 13, 14, 20, 16, 17] == test_heap.heap)
 
 def test_delete2():
+    # Testing an initial list that is not sorted.
     test_list = [-4, 70, 12, 75, 83, 14, 16, 77, 78, 84, 900, 15, 16, 17, 22]
     test_heap = MinHeap(test_list)
     assert(-4 == test_heap.delete())
     assert([12, 70, 14, 75, 83, 15, 16, 77, 78, 84, 900, 22, 16, 17] == test_heap.heap)
+
+def test_delete3():
+    # This one will test the branch in heapify that applies to a left child
+    # only.
+    test_list = list(range(7))
+    test_heap = MinHeap(test_list)
+    assert(test_heap.delete() == 0)
+    assert([1, 3, 2, 6, 4, 5] == test_heap.heap)
+
+def test_build_heap():
+    test_list1 = list(range(11))
+    test_heap1 = MinHeap(test_list1)
+    assert(test_list1 == test_heap1.heap)
+
+    test_list2 = [99, 7, 12, 4, 8, 9, -1, 6, -900]
+    test_heap2 = MinHeap(test_list2)
+    assert([-900, 4, -1, 6, 8, 9, 12, 99, 7] == test_heap2.heap)
