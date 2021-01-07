@@ -20,16 +20,16 @@ class MinHeap:
     # Swap the values at indices i and j in the heap.
     # SIGNATURE
     # swap :: Integer, Integer => None
-    def swap(self, i, j):
-        self.heap[i], self.heap[j] = self.heap[j], self.heap[i]
+    def swap(self, arr, i, j):
+        arr[i], arr[j] = arr[j], arr[i]
 
     # PURPOSE
     # Get the index parent index of the given index.
     # If the parent does not exist, return -1.
     # SIGNATURE
     # parent :: Integer => Integer
-    def parent(self, index):
-        if (index == 0 or index > (len(self.heap) - 1)):
+    def parent(self, arr, index):
+        if (index == 0 or index > (len(arr) - 1)):
             return -1
         return (index - 1) // 2
 
@@ -38,18 +38,18 @@ class MinHeap:
     # If the child does not exist, return -1.
     # SIGNATURE
     # left_child :: Integer => Integer
-    def left_child(self, index):
+    def left_child(self, arr, index):
         child_dex = 2 * (index + 1) - 1
-        return child_dex if child_dex < len(self.heap) else -1
+        return child_dex if child_dex < len(arr) else -1
 
     # PURPOSE
     # Get the index of the right child of the given index.
     # If the child does not exist, return -1.
     # SIGNATURE
     # right_child :: Integer => Integer
-    def right_child(self, index):
+    def right_child(self, arr, index):
         child_dex = 2 * (index + 1)
-        return child_dex if child_dex < len(self.heap) else -1
+        return child_dex if child_dex < len(arr) else -1
 
     # PURPOSE
     # Insert a new value in the correct position in the heap.
@@ -60,45 +60,50 @@ class MinHeap:
     def insert(self, val):
         self.heap.append(val)
         index = len(self.heap) - 1
-        while(self.heap[self.parent(index)] > self.heap[index] and self.parent(index) >= 0):
-            self.swap(self.parent(index), index)
-            index = self.parent(index)
+        while(self.heap[self.parent(self.heap, index)] > self.heap[index] and self.parent(self.heap, index) >= 0):
+            self.swap(self.heap, self.parent(self.heap, index), index)
+            index = self.parent(self.heap, index)
         return
 
     # PURPOSE
     # Determine if a given position has a left child.
     # SIGNATURE
     # has_left_child :: Integer => Boolean
-    def has_left_child(self, index):
-        return self.left_child(index) < len(self.heap)
+    def has_left_child(self, arr, index):
+        return self.left_child(arr, index) < len(arr) and self.left_child(arr, index) != -1
 
     # PURPOSE
     # Determine if a given position has a right child.
     # SIGNATURE
     # has_right_child :: Integer => Boolean
-    def has_right_child(self, index):
-        return self.left_child(index) < len(self.heap)
+    def has_right_child(self, arr, index):
+        return self.left_child(arr, index) < len(arr) and self.right_child(arr, index) != -1
 
     # PURPOSE
     # Given the index of a value that violates the heap property,
     # bubble the value at the given index down to its correct position.
     # SIGNATURE
     # heapify :: Integer => None
-    def heapify(self, index):
+    def heapify(self, arr, index):
         min = index
         curr_pos = index
-        while(self.has_left_child(index) and self.has_right_child(curr_pos) and curr_pos != -1):
-            if self.heap[curr_pos] > self.heap[self.left_child(curr_pos)]:
-                min = self.left_child(curr_pos)
-            if self.heap[min] > self.heap[self.right_child(curr_pos)]:
-                min = self.right_child(curr_pos)
+        while(self.has_left_child(arr, curr_pos) and self.has_right_child(arr, curr_pos)):
+            left_child = self.left_child(arr, curr_pos)
+            right_child = self.right_child(arr, curr_pos)
+            min = curr_pos
+            if arr[curr_pos] > arr[left_child]:
+                min = self.left_child(arr, curr_pos)
+            if arr[min] > arr[right_child]:
+                min = right_child
             if min == curr_pos:
                 break
-            self.swap(min, curr_pos)
-            curr_pos = min
-        if self.has_left_child(curr_pos) and curr_pos != -1:
-            if self.heap[curr_pos] > self.heap[self.left_child(curr_pos)]:
-                self.swap(curr_pos, self.left_child(curr_pos))
+            else:
+                self.swap(arr, curr_pos, min)
+                curr_pos = min
+        if self.has_left_child(arr, curr_pos):
+        # Add a test for this branch
+            if arr[curr_pos] > arr[self.left_child(arr, curr_pos)]:
+                self.swap(arr, curr_pos, self.left_child(arr, curr_pos))
         return
 
     # PURPOSE
@@ -110,9 +115,9 @@ class MinHeap:
     # space = O(1)
     def delete(self):
         min = self.get_min()
-        self.swap(0, len(self.heap) - 1)
+        self.swap(self.heap, 0, len(self.heap) - 1)
         self.heap = self.heap[:len(self.heap) - 1]
-        self.heapify(0)
+        self.heapify(self.heap, 0)
         return min
 
     # PURPOSE
@@ -124,16 +129,11 @@ class MinHeap:
     def get_min(self):
         return self.heap[0]
 
-# test_list = list(range(21))
-# test_heap = MinHeap(test_list)
-# test_heap.delete()
-# print(test_heap.heap)
-# test_heap.delete()
-# print(test_heap.heap)
-# test_heap.delete()
-# print(test_heap.heap)
-
-test_list = [-4, 70, 12, 71, 99, 15, 19, 72, 100, 17, 21, 88, 500]
-test_heap = MinHeap(test_list)
-test_heap.delete()
-print(test_heap.heap)
+    # PURPOSE
+    # Take in a list of numbers and turn it into a valid min-heap.
+    # SIGNATURE
+    # build_heap :: List => None
+    def build_heap(self, arr):
+        for i in range((len(arr) - 1) / 2, -1, -1):
+            self.heapify(arr, i)
+        return
