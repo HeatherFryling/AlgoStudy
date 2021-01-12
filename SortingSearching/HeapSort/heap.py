@@ -13,7 +13,6 @@ class MinHeap:
     # SIGNATURE
     # MinHeap() :: self, List => None
     def __init__(self, heap=[]):
-        self.size = len(heap)
         self.heap = self.build_heap(heap)
 
     # PURPOSE
@@ -29,7 +28,7 @@ class MinHeap:
     # SIGNATURE
     # parent :: Integer => Integer
     def parent(self, index):
-        if (index == 0 or index > self.size - 1):
+        if (index == 0 or index > len(self.heap) - 1):
             return -1
         return (index - 1) // 2
 
@@ -40,7 +39,7 @@ class MinHeap:
     # left_child :: Integer => Integer
     def left_child(self, index):
         child_dex = 2 * (index + 1) - 1
-        return child_dex if child_dex < self.size else -1
+        return child_dex if child_dex < len(self.heap) else -1
 
     # PURPOSE
     # Get the index of the right child of the given index.
@@ -49,7 +48,7 @@ class MinHeap:
     # right_child :: Integer => Integer
     def right_child(self, index):
         child_dex = 2 * (index + 1)
-        return child_dex if child_dex < self.size else -1
+        return child_dex if child_dex < len(self.heap) else -1
 
     # PURPOSE
     # Insert a new value in the correct position in the heap.
@@ -58,8 +57,7 @@ class MinHeap:
     # TIME AND SPACE COMPLEXITY:
     # Time: O(logn), Space: O(1)
     def insert_to_heap(self, val):
-        self.size += 1
-        self.heap.insert(self.size - 1, val)
+        self.heap.append(val)
         index = len(self.heap) - 1
         while(self.heap[self.parent(index)] > self.heap[index] and self.parent(index) >= 0):
             self.swap(self.heap, self.parent(index), index)
@@ -71,14 +69,14 @@ class MinHeap:
     # SIGNATURE
     # has_left_child :: Integer => Boolean
     def has_left_child(self, index):
-        return self.left_child(index) < self.size and self.left_child(index) != -1
+        return self.left_child(index) < len(self.heap) and self.left_child(index) != -1
 
     # PURPOSE
     # Determine if a given position has a right child.
     # SIGNATURE
     # has_right_child :: Integer => Boolean
     def has_right_child(self, index):
-        return self.left_child(index) < self.size and self.right_child(index) != -1
+        return self.left_child(index) < len(self.heap) and self.right_child(index) != -1
 
     # PURPOSE
     # Given the index of a value that violates the heap property,
@@ -115,8 +113,8 @@ class MinHeap:
     # space = O(1)
     def delete(self):
         min = self.get_min()
-        self.swap(self.heap, 0, self.size - 1)
-        self.size -= 1
+        self.swap(self.heap, 0, len(self.heap) - 1)
+        self.heap.pop()
         self.heapify(self.heap, 0)
         return min
 
@@ -127,7 +125,7 @@ class MinHeap:
     # TIME AND SPACE COMPLEXITY
     # time = O(1) space = O(1)
     def get_min(self):
-        if self.size > 0:
+        if len(self.heap) > 0:
             return self.heap[0]
         return None
 

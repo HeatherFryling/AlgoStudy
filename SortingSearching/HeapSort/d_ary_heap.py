@@ -9,12 +9,11 @@ class DAryMinHeap:
     d = 0
 
     # PURPOSE
-    # Initialize the MinHeap
+    # Initialize the DAryMinHeap
     # SIGNATURE
-    # MinHeap() :: self, List => None
+    # DAryMinHeap() :: self, Integer, List => None
     def __init__(self, d, heap):
         self.d = d
-        print("from init", self.build_heap(heap))
         self.heap = self.build_heap(heap)
 
     # PURPOSE
