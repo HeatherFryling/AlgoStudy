@@ -21,6 +21,8 @@ def counting_sort(arr, k):
         counts[i] += counts[i-1]
     # Set the index given in counts in the sorted array to the value
     # of the input array at index i.
+    # Insert the values into their correct position starting at the end of the
+    # input array in order to keep the sort stable.
     for i in range(len(arr)-1, -1, -1):
         sorted_arr[counts[arr[i]]] = arr[i]
         counts[arr[i]] -= 1

@@ -20,6 +20,7 @@ def test_counting_sort_defined():
 def test_counting_sort_random():
     for _ in range(100):
         random_list = generate_random_list(100, 100)
-        answer = counting_sort(random_list, 100)
-        random_list.sort()
-        assert(random_list == answer)
+        copy = random_list.copy()
+        my_answer = counting_sort(random_list, 100)
+        copy.sort()
+        assert(copy == my_answer)
