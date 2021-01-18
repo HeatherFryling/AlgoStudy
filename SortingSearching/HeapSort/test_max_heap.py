@@ -1,3 +1,7 @@
+# These tests are less extensive than on the min heap, because this
+# is the same as min heap except the direction of the comparison in 
+# heapify.
+
 from max_heap import *
 
 def test_build_heap():

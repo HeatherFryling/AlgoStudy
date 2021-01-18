@@ -73,7 +73,7 @@ class MaxHeap:
     # SIGNATURE
     # has_right_child :: Integer => Boolean
     def has_right_child(self, arr, index):
-        return self.left_child(arr, index) < len(arr) and self.right_child(arr, index) != -1
+        return self.right_child(arr, index) < len(arr) and self.right_child(arr, index) != -1
 
     # PURPOSE
     # Given the index of a value that violates the heap property,
