@@ -28,8 +28,8 @@ class DAryMinHeap:
     # If the parent does not exist, return -1.
     # SIGNATURE
     # parent :: Integer => Integer
-    def parent(self, index):
-        if (index == 0 or index > len(self.heap) - 1):
+    def parent(self, arr, index):
+        if (index == 0 or index > len(arr) - 1):
             return -1
         return (index - 1) // self.d
 
@@ -48,12 +48,12 @@ class DAryMinHeap:
     # insert :: Integer => None
     # TIME AND SPACE COMPLEXITY:
     # Time: O(logn), Space: O(1)
-    def insert_to_heap(self, val):
-        self.heap.append(val)
-        index = len(self.heap) - 1
-        while(self.heap[self.parent(index)] > self.heap[index] and self.parent(index) >= 0):
-            self.swap(self.heap, self.parent(index), index)
-            index = self.parent(index)
+    def insert_to_heap(self, arr, val):
+        arr.append(val)
+        index = len(arr) - 1
+        while(arr[self.parent(arr, index)] > arr[index] and self.parent(arr, index) >= 0):
+            self.swap(arr, self.parent(arr, index), index)
+            index = self.parent(arr, index)
         return
 
     # PURPOSE
@@ -89,7 +89,7 @@ class DAryMinHeap:
     def heapify(self, arr, index):
         min_index = index
         curr_pos = index
-        last_parent = (len(self.heap) - 2) // self.d
+        last_parent = (len(arr) - 2) // self.d
         while(curr_pos <= last_parent):
             min_index = self.min_parent_child(arr, curr_pos)
             if min_index == curr_pos:
@@ -133,17 +133,7 @@ class DAryMinHeap:
             self.heapify(arr, i)
         return arr
 
-test_list1 = list(range(11))
-test_heap1 = DAryMinHeap(2, test_list1)
-print(test_list1)
-print(test_heap1.heap)
-print(test_heap1.build_heap(test_list1))
-print()
-
-
-test_list2 = [99, 7, 12, 4, 8, 9, -1, 6, -900]
-answer = [-900, 4, -1, 6, 8, 9, 12, 99, 7]
-test_heap2 = DAryMinHeap(2, test_list2)
-print(test_heap2.heap)
-print("from outside", test_heap2.build_heap(test_list2))
-print(answer)
+test_list = [-4, 70, 12, 75, 83, 14, 16, 77, 78, 84, 900, 15, 16, 17, 22]
+test_heap = DAryMinHeap(4, test_list)
+print(test_heap.delete())
+print(test_heap.heap)

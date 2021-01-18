@@ -37,18 +37,18 @@ class MinHeap:
     # If the child does not exist, return -1.
     # SIGNATURE
     # left_child :: Integer => Integer
-    def left_child(self, index):
+    def left_child(self, arr, index):
         child_dex = 2 * (index + 1) - 1
-        return child_dex if child_dex < len(self.heap) else -1
+        return child_dex if child_dex < len(arr) else -1
 
     # PURPOSE
     # Get the index of the right child of the given index.
     # If the child does not exist, return -1.
     # SIGNATURE
     # right_child :: Integer => Integer
-    def right_child(self, index):
+    def right_child(self, arr, index):
         child_dex = 2 * (index + 1)
-        return child_dex if child_dex < len(self.heap) else -1
+        return child_dex if child_dex < len(arr) else -1
 
     # PURPOSE
     # Insert a new value in the correct position in the heap.
@@ -68,15 +68,15 @@ class MinHeap:
     # Determine if a given position has a left child.
     # SIGNATURE
     # has_left_child :: Integer => Boolean
-    def has_left_child(self, index):
-        return self.left_child(index) < len(self.heap) and self.left_child(index) != -1
+    def has_left_child(self, arr, index):
+        return self.left_child(arr, index) < len(arr) and self.left_child(arr, index) != -1
 
     # PURPOSE
     # Determine if a given position has a right child.
     # SIGNATURE
     # has_right_child :: Integer => Boolean
-    def has_right_child(self, index):
-        return self.left_child(index) < len(self.heap) and self.right_child(index) != -1
+    def has_right_child(self, arr, index):
+        return self.left_child(arr, index) < len(arr) and self.right_child(arr, index) != -1
 
     # PURPOSE
     # Given the index of a value that violates the heap property,
@@ -86,12 +86,12 @@ class MinHeap:
     def heapify(self, arr, index):
         min = index
         curr_pos = index
-        while(self.has_left_child(curr_pos) and self.has_right_child(curr_pos)):
-            left_child = self.left_child(curr_pos)
-            right_child = self.right_child(curr_pos)
+        while(self.has_left_child(arr, curr_pos) and self.has_right_child(arr, curr_pos)):
+            left_child = self.left_child(arr, curr_pos)
+            right_child = self.right_child(arr, curr_pos)
             min = curr_pos
             if arr[curr_pos] > arr[left_child]:
-                min = self.left_child(curr_pos)
+                min = self.left_child(arr, curr_pos)
             if arr[min] > arr[right_child]:
                 min = right_child
             if min == curr_pos:
@@ -99,9 +99,9 @@ class MinHeap:
             else:
                 self.swap(arr, curr_pos, min)
                 curr_pos = min
-        if self.has_left_child(curr_pos):
-            if arr[curr_pos] > arr[self.left_child(curr_pos)]:
-                self.swap(arr, curr_pos, self.left_child(curr_pos))
+        if self.has_left_child(arr, curr_pos):
+            if arr[curr_pos] > arr[self.left_child(arr, curr_pos)]:
+                self.swap(arr, curr_pos, self.left_child(arr, curr_pos))
         return
 
     # PURPOSE
@@ -138,6 +138,8 @@ class MinHeap:
             self.heapify(arr, i)
         return arr
 
-test_list = list(range(20))
+test_list = [4, -1, 2, 3]
 test_heap = MinHeap(test_list)
-print(test_heap.left_child(9))
+print(test_heap.heap)
+test_heap.build_heap(test_list)
+print(test_heap.heap)
