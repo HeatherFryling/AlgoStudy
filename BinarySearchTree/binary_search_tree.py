@@ -1,6 +1,7 @@
 # Heather Fryling
 # 1/25/2021
 # Binary Search Tree Implementation
+# Based on class CS5800 Northeastern University Seattle by Zhifeng Sun
 
 # Required methods:
 #    insert(k, n)
@@ -55,20 +56,39 @@ def successor(node):
         curr = curr.left
     return curr
 
+def swap_vals(node1, node2):
+    temp = node1.val
+    node1.val = node2.val
+    node2.val = temp
+
 def delete(root, val):
     # Base case = we found the value we want to delete.
     if root.val == val:
-        if node.left == None and node.right == None:
-        return None
-        if node.left == None:
-        return node.right
-        if node.right == None:
-            return node.left
-        pred = predecessor(node)
-        swap(pred, node)
-
-
-    pass
+        # Case where the value to delete is in a leaf.
+        if root.left == None and root.right == None:
+            return None
+        # Case where the value to delete is in a node with only a right child.
+        if root.left == None:
+            return root.right
+        # Case where the value to delete is in a node with only a left child.
+        if root.right == None:
+            return root.left
+        # Case where the value to delete is in a node with two children.
+        pred = predecessor(root)
+        # Swap to place the correct value in the node to preserve the BST
+        # property after the deletion.
+        swap_vals(pred, root)
+        # Delete the value swapped to the end of the left subtree, where it
+        # now resides in a leaf node.
+        root.left = delete(root.left, val)
+    # Searching for the correct node to delete.
+    if val < root.val:
+        root.left = delete(root.left, val)
+    if val > root.val:
+        root.right = delete(root.right, val)
+    # This returns the root with the tree fixed. If the value wasn't found,
+    # nothing is changed.
+    return root
 
 def preorder_recursive(bst):
     if (bst == None):
@@ -92,8 +112,15 @@ def preorder_iterative(bst):
             stack.append(curr.left)
     return traversal
 
-# If this is done on a BST, the traversal will be in sorted order.
 def inorder_recursive(bst):
+    if bst == None:
+        return
+    inorder_recursive(bst.left)
+    print(bst.val)
+    inorder_recursive(bst.right)
+
+# If this is done on a BST, the traversal will be in sorted order.
+def inorder_iterative(bst):
     if bst == None:
         return []
     stack = deque()
