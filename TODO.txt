@@ -1,0 +1,8 @@
+1. Clean up documentation in:
+    * SortingSearching
+    * OrderStatistics
+    * DivideAndConquer
+2. Finish BST.
+3. Optional:
+    * Implement karatsuba in DivideAndConquer
+    * Implement Strassens in DivideAndConquer
