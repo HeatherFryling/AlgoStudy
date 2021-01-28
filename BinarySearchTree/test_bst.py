@@ -1,0 +1,170 @@
+from binary_search_tree import *
+
+def test_tree_node():
+    node1 = TreeNode(7)
+    assert(7 == node1.val)
+    assert(None == node1.left)
+    assert(None == node1.right)
+    assert(1 == node1.count)
+
+def test_tree_node_str():
+    node1 = TreeNode(7)
+    assert("NODE[val: 7, left: None, right: None, count: 1]" == str(node1))
+
+def test_in_order():
+    seven = TreeNode(7)
+    test_tree = seven
+    five = TreeNode(5)
+    test_tree.left = five
+    eleven = TreeNode(11)
+    test_tree.right = eleven
+    two = TreeNode(2)
+    test_tree.left.left = two
+    six = TreeNode(6)
+    test_tree.left.right = six
+    one = TreeNode(1)
+    test_tree.left.left.left = one
+    three = TreeNode(3)
+    test_tree.left.left.right = three
+    twelve = TreeNode(12)
+    test_tree.right.right = twelve
+    in_order = [1, 2, 3, 5, 6, 7, 11, 12]
+    traversal = inorder_rec(test_tree)
+    assert(in_order == traversal)
+
+def test_preorder_iterative():
+    seven = TreeNode(7)
+    insert(seven, 5)
+    insert(seven, 11)
+    insert(seven, 2)
+    insert(seven, 12)
+    insert(seven, 6)
+    insert(seven, 3)
+    insert(seven, 1)
+    insert(seven, 10)
+    assert([7, 5, 2, 1, 3, 6, 11, 10, 12] == preorder_iterative(seven))
+
+def test_insert():
+    seven = TreeNode(7)
+    insert(seven, 5)
+    assert(5 == seven.left.val)
+    assert(2 == seven.count)
+    assert([5, 7] == inorder_rec(seven))
+    insert(seven, 11)
+    assert(11 == seven.right.val)
+    assert([5, 7, 11] == inorder_rec(seven))
+    assert(3 == seven.count)
+    insert(seven, 2)
+    assert([2, 5, 7, 11] == inorder_rec(seven))
+    assert(4 == seven.count)
+    insert(seven, 12)
+    assert([2, 5, 7, 11, 12] == inorder_rec(seven))
+    assert(5 == seven.count)
+    insert(seven, 6)
+    assert([2, 5, 6, 7, 11, 12] == inorder_rec(seven))
+    assert(6 == seven.count)
+    insert(seven, 3)
+    assert([2, 3, 5, 6, 7, 11, 12] == inorder_rec(seven))
+    assert(7 == seven.count)
+    insert(seven, 1)
+    assert([1, 2, 3, 5, 6, 7, 11, 12] == inorder_rec(seven))
+    assert(8 == seven.count)
+    assert(5 == seven.left.count)
+    assert(1 == seven.left.right.count)
+    assert(3 == seven.left.left.count)
+    assert(2 == seven.right.count)
+    assert(1 == seven.right.right.count)
+
+def test_delete():
+    seven = TreeNode(7)
+    insert(seven, 5)
+    insert(seven, 11)
+    insert(seven, 2)
+    insert(seven, 12)
+    insert(seven, 6)
+    insert(seven, 3)
+    insert(seven, 1)
+    assert(8 == seven.count)
+    assert([1, 2, 3, 5, 6, 7, 11, 12] == inorder_rec(seven))
+    # Testing deleting a child node.
+    delete(seven, 1)
+    assert(7 == seven.count)
+    assert([2, 3, 5, 6, 7, 11, 12] == inorder_rec(seven))
+    assert(4 == seven.left.count)
+    assert(1 == seven.left.right.count)
+    assert(2 == seven.left.left.count)
+    assert(2 == seven.right.count)
+    # Testing deleting a node with two children.
+    delete(seven, 5)
+    assert(6 == seven.count)
+    assert([2, 3, 6, 7, 11, 12] == inorder_rec(seven))
+    assert(3 == seven.left.val)
+    assert(3 == seven.left.count)
+    assert(1 == seven.left.left.count)
+    assert(1 == seven.left.right.count)
+    delete(seven, 6)
+    assert([2, 3, 7, 11, 12] == inorder_rec(seven))
+    assert(5 == seven.count)
+    # testing deleting a node with only a left child
+    delete(seven, 3)
+    assert(2 == seven.left.val)
+    assert([2, 7, 11, 12] == inorder_rec(seven))
+    assert(4 == seven.count)
+    # testing deleting a node with only a right child
+    delete(seven, 11)
+    assert(12 == seven.right.val)
+    assert([2, 7, 12] == inorder_rec(seven))
+    assert(3 == seven.count)
+    assert(1 == seven.left.count)
+    assert(1 == seven.right.count)
+
+def test_kth_largest():
+    seven = TreeNode(7)
+    insert(seven, 5)
+    insert(seven, 11)
+    insert(seven, 2)
+    insert(seven, 12)
+    insert(seven, 6)
+    insert(seven, 3)
+    insert(seven, 1)
+    assert(8 == seven.count)
+    assert([1, 2, 3, 5, 6, 7, 11, 12] == inorder_rec(seven))
+    assert(1 == kth_largest(seven, 1))
+    assert(2 == kth_largest(seven, 2))
+    assert(3 == kth_largest(seven, 3))
+    assert(5 == kth_largest(seven, 4))
+    assert(6 == kth_largest(seven, 5))
+    assert(7 == kth_largest(seven, 6))
+    assert(11 == kth_largest(seven, 7))
+    assert(12 == kth_largest(seven, 8))
+
+def test_is_bst():
+    seven = TreeNode(7)
+    insert(seven, 5)
+    insert(seven, 11)
+    insert(seven, 2)
+    insert(seven, 12)
+    insert(seven, 6)
+    insert(seven, 3)
+    insert(seven, 1)
+    assert(True == is_bst(seven, None, None))
+    not_bst = TreeNode(7)
+    not_bst.left = TreeNode(5)
+    not_bst.right = TreeNode(11)
+    not_bst.left.right = TreeNode(8)
+    assert(False == is_bst(not_bst, None, None))
+    assert(True == is_bst(not_bst.left, None, None))
+
+def test_preorder_reconstruction():
+    preorder = [7, 5, 2, 1, 3, 6, 11, 10, 12]
+    reconstructed = reconstruct_bst_preorder(preorder)
+    assert(7 == reconstructed.val)
+    print(reconstructed)
+    assert(5 == reconstructed.left.val)
+    assert(2 == reconstructed.left.left.val)
+    assert(1 == reconstructed.left.left.left.val)
+    assert(3 == reconstructed.left.left.right.val)
+    assert(6 == reconstructed.left.right.val)
+    assert(11 == reconstructed.right.val)
+    assert(10 == reconstructed.right.left.val)
+    assert(12 == reconstructed.right.right.val)
