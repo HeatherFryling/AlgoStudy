@@ -25,7 +25,9 @@ def lcs_iterative(arr1, arr2):
             if arr1[i-1] == arr2[j-1]:
                 if not used:
                     dp[i][j] = dp[i-1][j-1] + 1
-                used = True
+                    used = True
+                else:
+                    dp[i][j] = max(dp[i-1][j], dp[i][j-1])
             if arr1[i-1] != arr2[j-1]:
                 dp[i][j] = max(dp[i-1][j], dp[i][j-1])
         i += 1
@@ -100,7 +102,7 @@ def lcs_reconstruction(arr1, arr2, dp):
     i = m
     j = n
     while i > 0 and j > 0:
-        if dp[i - 1][j - 1] == dp[i][j] - 1 and arr1[i-1] == arr2[j-1]:
+        if arr1[i-1] == arr2[j-1]:
             rev_ans.append(arr1[i - 1])
             i -= 1
             j -= 1
