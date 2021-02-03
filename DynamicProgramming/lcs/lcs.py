@@ -20,18 +20,39 @@ def lcs_iterative(arr1, arr2):
             dp[i].append(0)
     i = 1
     while i < (m + 1):
-        used = False
         for j in range(1, n + 1):
             if arr1[i-1] == arr2[j-1]:
-                if not used:
-                    dp[i][j] = dp[i-1][j-1] + 1
-                    used = True
-                else:
-                    dp[i][j] = max(dp[i-1][j], dp[i][j-1])
+                dp[i][j] = dp[i-1][j-1] + 1
             if arr1[i-1] != arr2[j-1]:
                 dp[i][j] = max(dp[i-1][j], dp[i][j-1])
         i += 1
     return dp
+
+# PURPOSE
+# Calculate the length of the LCS while optimizing for space.
+# SIGNATURE
+# lcs_space_optimizied :: List, List => Integer
+# TIME COMPLEXITY
+# O(m*n)
+# SPACE COMPLEXITY
+# O(m) (2 arrays of length m)
+
+def lcs_space_optimized(arr1, arr2):
+    m = len(arr1)
+    n = len(arr2)
+    dp = []
+    for i in range(2):
+        dp.append([])
+        for j in range(n + 1):
+            dp[i].append(0)
+    for i in range(1, m + 1):
+        row = i % 2
+        for j in range(1, n + 1):
+            if arr1[i - 1] == arr2[j - 1]:
+                dp[row][j] = dp[(row - 1) % 2][j - 1] + 1
+            else:
+                dp[row][j] = max(dp[(row - 1) % 2][j], dp[row][j - 1])
+    return dp[m % 2][n]
 
 # PURPOSE
 # Recursively calculate the longest common subsequence of two arrays. Returns 
