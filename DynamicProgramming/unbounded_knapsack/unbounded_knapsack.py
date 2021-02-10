@@ -16,6 +16,23 @@ def unbounded_knapsack(values, weights, c):
         max_so_far.append(curr_max)
     return max_so_far[c]
 
+def unbounded_recursive_helper(values, weights, i, dp):
+    curr_max = 0
+    for j in range(len(values)):
+        if weights[j] <= i:
+            curr_max = 0
+            if dp[i - weights[j] != -1]:
+                curr_max = values[j] + dp[i - weights[j]]
+            else:
+                curr_max = values[j] + unbounded_recursive_helper(values, weights, i - weights[j], dp)
+
+def unbounded_recursive(values, weights, c):
+    dp = []
+    dp.append(0)
+    for i in range(c):
+        dp.append(-1)
+    return unbounded_recursive_helper(values, weights, c, dp)
+
 v1 = [1]
 w1 = [4]
 c1 = 4
