@@ -172,32 +172,53 @@ def inorder_iterative(bst):
         curr = curr.right
     return traversal
 
+# def reconstruct_bst_preorder(arr):
+#     if len(arr) == 0:
+#         return None
+#     root = TreeNode(arr[0])
+#     stack = deque()
+#     stack.append(root)
+#     for i in range(1, len(arr)):
+#         parent = stack[-1]
+#         child = TreeNode(arr[i])
+#         curr_num = arr[i]
+#         # First move up the stack until you find the parent of the value you're
+#         # examining.
+#         while stack and stack[-1].val < curr_num:
+#             parent = stack.pop()
+
+#         # If we made it to the end of the stack and still didn't find a value
+#         # greater than the child, it's a right child
+#         if parent.val < child.val:
+#             parent.right = child
+#         # Otherwise, this is the left child.
+#         else:
+#             parent.left = child
+#         # The child is now a potential parent for the rest of the values in the
+#         # array.
+#         stack.append(child)
+#     return root
+
 def reconstruct_bst_preorder(arr):
     if len(arr) == 0:
         return None
-    root = TreeNode(arr[0])
+    if len(arr) == 1:
+        return TreeNode(arr[0])
     stack = deque()
+    root = TreeNode(arr[0])
     stack.append(root)
     for i in range(1, len(arr)):
         parent = stack[-1]
         child = TreeNode(arr[i])
-        curr_num = arr[i]
-        # First move up the stack until you find the parent of the value you're
-        # examining.
-        while stack and stack[-1].val < curr_num:
+        while stack and stack[-1].val < child.val:
             parent = stack.pop()
-
-        # If we made it to the end of the stack and still didn't find a value
-        # greater than the child, it's a right child
         if parent.val < child.val:
             parent.right = child
-        # Otherwise, this is the left child.
         else:
             parent.left = child
-        # The child is now a potential parent for the rest of the values in the
-        # array.
         stack.append(child)
     return root
+
 
 def validate_bst(root):
     return is_bst(root, None, None)
@@ -205,14 +226,13 @@ def validate_bst(root):
 def is_bst(root, low, high):
     if root == None:
         return True
-    val = root.val
-    if low != None and val <= low:
+    if low != None and root.val < low:
         return False
-    if high != None and val >= high:
+    if high != None and root.val >= high:
         return False
-    if not (is_bst(root.right, val, high)):
+    if not is_bst(root.left, low, root.val):
         return False
-    if not (is_bst(root.left, low, val)):
+    if not is_bst(root.right, root.val, high):
         return False
     return True
 
