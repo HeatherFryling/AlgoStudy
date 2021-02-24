@@ -31,9 +31,9 @@ def get_max(matrix):
 # SIGNATURE
 # matrix_path :: List[List] => Integer
 # TIME COMPLEXITY
-# O(n^2)
+# O(mn)
 # SPACE COMPLEXITY
-# O(n^2)
+# O(mn)
 def matrix_path(matrix):
     m = len(matrix)
     n = len(matrix[0])
@@ -100,9 +100,9 @@ def matrix_helper(matrix, i, j, dp):
 # SIGNATURE
 # matrix_path_td :: List[List] => Integer
 # TIME COMPLEXITY
-# O(n^2)
+# O(mn)
 # SPACE COMPLEXITY
-# O(n^2)
+# O(mn)
 def matrix_path_td(matrix):
     m = len(matrix)
     n = len(matrix[0])
