@@ -47,7 +47,7 @@ def lis_helper(arr, i, dp):
 # subsequence.
 # This implementation uses a top-down approach.
 # SIGNATURE
-# longest_increasing_subsequence :: List => Integer
+# lis_top_down :: List => Integer
 # TIME COMPLEXITY
 # O(n^2)
 # SPACE COMPLEXITY
