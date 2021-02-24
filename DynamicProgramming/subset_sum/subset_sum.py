@@ -56,7 +56,7 @@ def s_s_helper(arr, i, t, dp):
 # contains a subset whose sum equals the target.
 # Top-down implementation.
 # SIGNATURE
-# subset_sum :: List, Integer => Boolean
+# subset_sum_top_down :: List, Integer => Boolean
 # TIME COMPLEXITY
 # O(n*target)
 # SPACE COMPLEXITY
