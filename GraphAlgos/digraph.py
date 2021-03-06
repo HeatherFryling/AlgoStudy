@@ -1,6 +1,7 @@
 # Heather Fryling
 # 3/3/2021
-# A basic directed graph representation for implementing graph algos.
+# A basic directed graph in adjacency list representation for implementing 
+# graph algos.
 
 class DiGraph:
     def __init__(self):

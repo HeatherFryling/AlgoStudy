@@ -1,6 +1,7 @@
 # Heather Fryling
 # 3/3/2021
-# A basic undirected graph representation for implementing graph algos.
+# A basic undirected graph in adjacency list representation for 
+# implementing graph algos.
 
 class Graph:
     def __init__(self):
