@@ -4,8 +4,8 @@
 from digraph import DiGraph
 
 # PURPOSE
-# Given a starting node, use dfs to construct a topological sort in reverse
-# order.
+# Given a starting node, use dfs to construct a topological sort in 
+# reverse order.
 # SIGNATURE
 # dfs_topo :: DiGraph, Integer, Set, List => None
 def dfs_topo(g, u, visited, topo_sorted):

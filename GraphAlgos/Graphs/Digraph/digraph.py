@@ -40,6 +40,11 @@ class DiGraph:
     def __repr__(self):
         return "DiGraph{" + str(self.graph) + "}"
 
+    def __eq__(self, object):
+        if isinstance(object, DiGraph) and object.graph == self.graph:
+            return True
+        return False
+
 my_graph = DiGraph()
 print(my_graph)
 my_graph.add_vertex(1)
@@ -48,3 +53,18 @@ my_graph.add_edge(1, 2)
 print(my_graph)
 print(my_graph.vert_count)
 print(my_graph.edge_count)
+
+eq_graph = DiGraph()
+eq_graph.add_edge(1, 2)
+print(my_graph == my_graph)
+print(my_graph == eq_graph)
+
+empty_graph = DiGraph()
+print(my_graph == empty_graph)
+
+other_graph = DiGraph()
+other_graph.add_edge(1, 2)
+other_graph.add_edge(3, 4)
+print(my_graph == other_graph)
+
+print(my_graph == "not_a_graph")
