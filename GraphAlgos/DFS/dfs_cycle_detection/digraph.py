@@ -39,12 +39,3 @@ class DiGraph:
 
     def __repr__(self):
         return "DiGraph{" + str(self.graph) + "}"
-
-my_graph = DiGraph()
-print(my_graph)
-my_graph.add_vertex(1)
-print(my_graph)
-my_graph.add_edge(1, 2)
-print(my_graph)
-print(my_graph.vert_count)
-print(my_graph.edge_count)

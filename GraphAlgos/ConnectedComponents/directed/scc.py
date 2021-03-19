@@ -21,7 +21,7 @@ def g_rev(g):
 # PURPOSE
 # Calculate a topological sort of the given Digraph, g.
 # SIGNATURE
-# dfs_rev_topo :: DiGraph => List
+# dfs_topo :: DiGraph => List
 # TIME COMPLEXITY
 # O(m + n)
 # SPACE COMPLEXITY
