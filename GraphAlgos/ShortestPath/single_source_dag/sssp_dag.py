@@ -4,6 +4,15 @@
 from collections import deque
 from digraph import DiGraph
 
+# PURPOSE
+# Given a directed graph in adjacency list format, return a dictionary 
+# containing the in-degree of each vertex.
+# SIGNATURE
+# calc_in_degree : DiGraph => Dictionary
+# TIME COMPLEXITY
+# O(n + m) --each vertex and each edge is visited once.
+# SPACE COMPLEXITY
+# O(n) --in_degree has one entry per vertex.
 def calc_in_degree(g):
     in_degree = {}
     for u in g.graph.keys():
@@ -13,6 +22,16 @@ def calc_in_degree(g):
             in_degree[v] += 1
     return in_degree
 
+# PURPOSE
+# Calculate a topological ordering of a give Digraph in adjacency list format,
+# g.
+# SIGNATURE
+# bfs_topo :: Digraph => List
+# TIME COMPLEXITY
+# O(n + m) --this is BFS.
+# SPACE COMPLEXITY
+# O(n) --topological ordering has one entry per vertex, as does in_degree and
+# the queue is also O(n)
 def bfs_topo(g):
     q = deque()
     topo = []
@@ -29,12 +48,31 @@ def bfs_topo(g):
                 q.append(v)
     return topo
 
+# PURPOSE
+# Helper function for sssp_dag. Updates the distance to a vertex according
+# to whether or not it is cheaper to travel via edge (u, v).
+# SIGNATURE
+# relax :: Vertex, Vertex, Dictionary, Dictionary => None
+# TIME COMPLEXITY
+# O(1)
+# SPACE COMPLEXITY
+# O(1)
 def relax(u, v, dist, cost):
     if (u, v) not in cost:
         return
     if dist[u] + cost[(u, v)] < dist[v]:
         dist[v] = dist[u] + cost[(u, v)]
 
+# PURPOSE
+# Given a DAG in adjacency list format, g, a starting vertex, s, and a
+# dictionary are costs for each edge, calculate the cheapest path from
+# s to every other vertex.
+# SIGNATURE
+# sssp_dag :: Digraph, Vertex, Dictionary => Dictionary
+# TIME COMPLEXITY
+# O(n + m)--for toposort and the algo itself visits each edge and each vertex.
+# SPACE COMPLEXITY
+# O(n)--dictionaries, queues, etc. are all O(n).
 def sssp_dag(g, s, cost):
     topo_order = bfs_topo(g)
     dist = {}
@@ -46,22 +84,3 @@ def sssp_dag(g, s, cost):
         for v in g.graph[u]:
             relax(u, v, dist, cost)
     return dist
-
-g = DiGraph()
-g.add_edge(4, 2)
-g.add_edge(4, 1)
-g.add_edge(1, 3)
-g.add_edge(2, 3)
-g.add_edge(3, 5)
-g.add_edge(1, 5)
-cost = {}
-cost[(4, 2)] = 1
-cost[(4, 1)] = 3
-cost[(1, 3)] = 1
-cost[(2, 3)] = 2
-cost[(3, 5)] = 4
-cost[(1, 5)] = 3
-
-print(calc_in_degree(g))
-print(bfs_topo(g))
-print(sssp_dag(g, 2, cost))
