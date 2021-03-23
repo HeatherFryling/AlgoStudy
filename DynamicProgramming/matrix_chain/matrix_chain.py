@@ -83,4 +83,6 @@ def matrix_chain_top_down(sizes):
         for _ in range(n):
             dp[i].append(float('inf'))
     ans = matrix_chain_helper(sizes, 0, n - 1, dp)
+    for i in range(len(dp)):
+        print(dp[i])
     return ans

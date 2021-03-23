@@ -45,6 +45,7 @@ def edit_distance(start, target):
             else:
                 if dp[i - 1][j - 1] + 1 < dp[i][j]:
                     dp[i][j] = dp[i - 1][j - 1] + 1 # Replace operation.
+    print_dp(dp)
     return dp[n][m]
 
 # PURPOSE
@@ -99,4 +100,7 @@ def edit_distance_top_down(start, target):
     n = len(start)
     m = len(target)
     ans =  edit_distance_helper(start, target, n, m, dp)
+    print(dp)
     return ans
+
+print(edit_distance("sunday", "saturday"))
