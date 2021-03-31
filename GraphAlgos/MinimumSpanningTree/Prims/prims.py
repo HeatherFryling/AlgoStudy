@@ -2,7 +2,17 @@
 # 3/30/2021
 
 from graph import Graph
+from heapdict import heapdict
 
+# PURPOSE
+# Given an undirected, connected graph, return the edges that comprise its
+# minimum spanning tree.
+# SIGNATURE
+# prims :: Graph, Dictionary => Dictionary
+# TIME COMPLEXITY
+# O(n^2)
+# SPACE COMPLEXITY
+# O(n) for cut, parent, dist
 def prims(g, weights):
     n = len(g)
     cut = [False for u in range(n)]
@@ -30,8 +40,17 @@ def prims(g, weights):
         parent[smallest_v] = smallest_u
         cut[smallest_v] = True
         cut_count += 1
-    return(dist, parent)
+    return parent
 
+# PURPOSE
+# Helper function to get the weight of an edge given u, v, and a weights
+# dictionary with (u, v) edges as keys.
+# SIGNATURE
+# get_weight :: Vertex, Vertex, Dictionary => Float
+# TIME COMPLEXITY
+# O(1)
+# SPACE COMPLEXITY
+# O(1)
 def get_weight(u, v, weights):
     if u == v:
         return 0
@@ -39,12 +58,21 @@ def get_weight(u, v, weights):
         return weights[(u, v)]
     return float('inf')
 
+# PURPOSE
+# Given an undirected, connected graph, return the edges that comprise its
+# minimum spanning tree. This time, instead of using lists, use a dictionary-
+# based custom implementation of a graph adjacency list data structure to
+# allow more flexibility in naming of vertices.
+# SIGNATURE
+# prims_custom :: Graph, Dictionary => Dictionary
+# TIME COMPLEXITY
+# O(n^2)
+# SPACE COMPLEXITY
+#O(n) forcut, parent, and dist.
 def prims_custom_g(g, weights):
     n = len(g.graph.keys())
     cut = set({})
     parent = {}
-    for u in g.graph.keys():
-        parent[u] = None
     dist = {}
     for u in g.graph.keys():
         dist[u] = float('inf')
@@ -52,6 +80,7 @@ def prims_custom_g(g, weights):
     u = list(g.graph.keys())[0]
     cut.add(u)
     dist[u] = 0
+    parent[u] = None
     while(len(cut) < n):
         smallest_weight = float('inf')
         smallest_v = None
@@ -67,62 +96,44 @@ def prims_custom_g(g, weights):
         dist[smallest_v] = smallest_weight
         parent[smallest_v] = smallest_u
         cut.add(smallest_v)
-    return(dist, parent)
+    return parent
 
-g1 = [[1, 2, 3], [0, 3], [0, 3], [0, 1, 2]]
-weights1 = [[0, 1, 2, 2],
-            [1, 0, float('inf'), 4],
-            [2, float('inf'), 0, 3],
-            [2, 4, 3, 0]]
-
-print(prims(g1, weights1))
-
-g2 = [[1, 2, 3], [0, 3], [0, 3], [0, 1, 2]]
-weights2 = [[0, 1, 4, 3],
-            [1, 0, float('inf'), 2],
-            [4, float('inf'), 0, 5],
-            [3, 2, 5, 0]]
-
-print(prims(g2, weights2))
-
-g1_custom = Graph()
-g1_custom.add_edge(1, 2)
-g1_custom.add_edge(1, 3)
-g1_custom.add_edge(1, 4)
-g1_custom.add_edge(2, 4)
-g1_custom.add_edge(3, 4)
-
-weights1_custom = {}
-weights1_custom[(1, 2)] = 1
-weights1_custom[(2, 1)] = 1
-weights1_custom[(1, 3)] = 2
-weights1_custom[(3, 1)] = 2
-weights1_custom[(1, 4)] = 2
-weights1_custom[(4, 1)] = 2
-weights1_custom[(2, 4)] = 4
-weights1_custom[(4, 2)] = 4
-weights1_custom[(3, 4)] = 3
-weights1_custom[(4, 3)] = 3
-
-print(prims_custom_g(g1_custom, weights1_custom))
-
-g2_custom = Graph()
-g2_custom.add_edge('a', 'b')
-g2_custom.add_edge('a', 'c')
-g2_custom.add_edge('a', 'd')
-g2_custom.add_edge('b', 'd')
-g2_custom.add_edge('c', 'd')
-
-weights2_custom = {}
-weights2_custom[('a', 'b')] = 1
-weights2_custom[('b', 'a')] = 1
-weights2_custom[('a', 'c')] = 4
-weights2_custom[('c', 'a')] = 4
-weights2_custom[('a', 'd')] = 3
-weights2_custom[('d', 'a')] = 3
-weights2_custom[('b', 'd')] = 2
-weights2_custom[('d', 'b')] = 2
-weights2_custom[('c', 'd')] = 5
-weights2_custom[('d', 'c')] = 5
-
-print(prims_custom_g(g2_custom, weights2_custom))
+# PURPOSE
+# Given an undirected, connected graph, return the edges that comprise its
+# minimum spanning tree. This time use the custom graph data structure as
+# well as a priority queue. The priority queue speeds up getting the minimum
+# crossing edge.
+# SIGNATURE
+# prims_custom_efficient :: Graph, Dictionary => Dictionary
+# TIME COMPLEXITY
+# O((n + m)logn) -- All vertices and up to all edges are processed through the 
+# priority queue.
+# SPACE COMPLEXItY
+# O(n) -- for cut, parent, cheapest, and hd.
+def prims_custom_efficient(g, weights):
+    cut = set({})
+    parent = {}
+    cheapest = {}
+    hd = heapdict()
+    # Add an initial vertex to the cut set.
+    u = list(g.graph.keys())[0]
+    cut.add(u)
+    parent[u] = None
+    # Initialize the priority queue.
+    # No need to add non-crossing edges, as they will be inserted once they
+    # are crossing.
+    for v in g.graph[u]:
+        hd[v] = weights[(u, v)]
+        cheapest[v] = u
+    while hd:
+        w = hd.popitem()[0]
+        cut.add(w)
+        parent[w] = cheapest[w]
+        # Update the new crossing edges.
+        for y in g.graph[w]:
+            # Only look at crossing edges.
+            if y not in cut:
+                if weights[(y, w)] < hd[y]:
+                    hd[y] = weights[(y, w)]
+                    cheapest[y] = w
+    return parent

@@ -38,11 +38,11 @@ class Graph:
     def __repr__(self):
         return "Graph{" + str(self.graph) + "}"
 
-my_graph = Graph()
-print(my_graph)
-my_graph.add_vertex(1)
-print(my_graph)
-my_graph.add_edge(1, 2)
-print(my_graph)
-print(my_graph.vert_count)
-print(my_graph.edge_count)
+# my_graph = Graph()
+# print(my_graph)
+# my_graph.add_vertex(1)
+# print(my_graph)
+# my_graph.add_edge(1, 2)
+# print(my_graph)
+# print(my_graph.vert_count)
+# print(my_graph.edge_count)
