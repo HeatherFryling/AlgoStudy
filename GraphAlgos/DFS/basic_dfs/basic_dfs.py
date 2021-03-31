@@ -51,3 +51,39 @@ def dfs_iterative(g, start):
                 visited.add(u)
                 stack.append(u)
     return traversal
+
+# PURPOSE
+# Traverse all edges of a digraph in adjacency list representation via DFS and
+# return the traversal.
+# SIGNATURE
+# dfs_all : DiGraph => List
+# TIME COMPLEXITY
+# O(m + n) -- checks all edges and all vertices once.
+# SPACE COMPLEXITY
+# O(n) -- an entry for each vertex in visited and traversal.
+def dfs_all(g):
+    traversal = []
+    visited = set({})
+    for u in g.graph.keys():
+        if u not in visited:
+            dfs_helper(g, u, visited, traversal)
+    return traversal
+
+g = DiGraph()
+g.add_edge('A', 'B')
+g.add_edge('A', 'E')
+g.add_edge('B', 'C')
+g.add_edge('B', 'E')
+g.add_edge('C', 'F')
+g.add_edge('C', 'B')
+g.add_edge('D', 'G')
+g.add_edge('D', 'H')
+g.add_edge('E', 'F')
+g.add_edge('E', 'B')
+g.add_edge('F', 'I')
+g.add_edge('F', 'E')
+g.add_edge('G', 'H')
+g.add_edge('G', 'D')
+g.add_edge('H', 'D')
+g.add_edge('H', 'G')
+print(dfs_all(g))
