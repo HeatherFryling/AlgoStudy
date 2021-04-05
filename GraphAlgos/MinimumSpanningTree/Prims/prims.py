@@ -32,11 +32,11 @@ def prims(g, weights):
                     smallest_u = u
                     smallest_dist = dist[u]
         cut[smallest_u] = True
+        cut_count += 1
         for v in g[smallest_u]:
             if weights[smallest_u][v] < dist[v]:
                 dist[v] = weights[smallest_u][v]
                 parent[v] = smallest_u
-        cut_count += 1
     return parent
 
 # PURPOSE
@@ -65,7 +65,7 @@ def get_weight(u, v, weights):
 # TIME COMPLEXITY
 # O(n^2)
 # SPACE COMPLEXITY
-#O(n) forcut, parent, and dist.
+#O(n) for cut, parent, and dist.
 def prims_custom_g(g, weights):
     n = len(g.graph.keys())
     cut = set({})
@@ -73,26 +73,25 @@ def prims_custom_g(g, weights):
     dist = {}
     for u in g.graph.keys():
         dist[u] = float('inf')
-    # Adding the first vertex to the cut.
     u = list(g.graph.keys())[0]
-    cut.add(u)
     dist[u] = 0
     parent[u] = None
     while(len(cut) < n):
-        smallest_weight = float('inf')
-        smallest_v = None
+        smallest_dist = float('inf')
         smallest_u = None
+        # Get the vertex with the smallest distance to the cut.
         for u in g.graph.keys():
-            if u in cut:
-                for v in g.graph.keys():
-                    if v not in cut:
-                        if get_weight(u, v, weights) < smallest_weight:
-                            smallest_weight = get_weight(u, v, weights)
-                            smallest_u = u
-                            smallest_v = v
-        dist[smallest_v] = smallest_weight
-        parent[smallest_v] = smallest_u
-        cut.add(smallest_v)
+            if u not in cut:
+                if dist[u] < smallest_dist:
+                    smallest_u = u
+                    smallest_dist = dist[u]
+        # Add the smallest distance vertex to the cut set.
+        cut.add(smallest_u)
+        # Update distances to the cut
+        for v in g.graph[smallest_u]:
+            if get_weight(smallest_u, v, weights) < dist[v]:
+                dist[v] = get_weight(smallest_u, v, weights)
+                parent[v] = smallest_u
     return parent
 
 # PURPOSE
@@ -106,47 +105,25 @@ def prims_custom_g(g, weights):
 # O((n + m)logn) -- All vertices and up to all edges are processed through the 
 # priority queue.
 # SPACE COMPLEXItY
-# O(n) -- for cut, parent, cheapest, and hd.
+# O(n) -- for cut, parent, dist, and hd.
 def prims_custom_efficient(g, weights):
     cut = set({})
     parent = {}
-    cheapest = {}
+    dist = {}
     hd = heapdict()
-    # Add an initial vertex to the cut set.
+    for u in g.graph.keys():
+        dist[u] = float('inf')
     u = list(g.graph.keys())[0]
-    cut.add(u)
+    dist[u] = 0
     parent[u] = None
-    # Initialize the priority queue.
-    # No need to add non-crossing edges, as they will be inserted once they
-    # are crossing.
-    for v in g.graph[u]:
-        hd[v] = weights[(u, v)]
-        cheapest[v] = u
+    hd[u] = 0
     while hd:
-        w = hd.popitem()[0]
-        cut.add(w)
-        parent[w] = cheapest[w]
+        smallest_u = hd.popitem()[0]
+        cut.add(smallest_u)
         # Update the new crossing edges.
-        for y in g.graph[w]:
-            # Only look at crossing edges.
-            if y not in cut:
-                if weights[(y, w)] < hd[y]:
-                    hd[y] = weights[(y, w)]
-                    cheapest[y] = w
+        for v in g.graph[smallest_u]:
+            if get_weight(smallest_u, v, weights) < dist[v]:
+                dist[v] = get_weight(smallest_u, v, weights)
+                hd[v] = get_weight(smallest_u, v, weights)
+                parent[v] = smallest_u
     return parent
-
-# g1 = [[1, 2, 3], [0, 3], [0, 3], [0, 1, 2]]
-# weights1 = [[0, 1, 2, 2],
-#             [1, 0, float('inf'), 4],
-#             [2, float('inf'), 0, 3],
-#             [2, 4, 3, 0]]
-# ans1 = [None, 0, 0, 0]
-# print(prims(g1, weights1))
-
-# # g2 = [[1, 2, 3], [0, 3], [0, 3], [0, 1, 2]]
-# # weights2 = [[0, 1, 4, 3],
-# #             [1, 0, float('inf'), 2],
-# #             [4, float('inf'), 0, 5],
-# #             [3, 2, 5, 0]]
-# # ans2 = [None, 0, 0, 1]
-# # assert(ans2 == prims(g2, weights2))
