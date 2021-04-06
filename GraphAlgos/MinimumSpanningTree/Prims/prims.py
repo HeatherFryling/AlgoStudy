@@ -89,7 +89,7 @@ def prims_custom_g(g, weights):
         cut.add(smallest_u)
         # Update distances to the cut
         for v in g.graph[smallest_u]:
-            if get_weight(smallest_u, v, weights) < dist[v]:
+            if v not in cut and get_weight(smallest_u, v, weights) < dist[v]:
                 dist[v] = get_weight(smallest_u, v, weights)
                 parent[v] = smallest_u
     return parent
@@ -122,7 +122,7 @@ def prims_custom_efficient(g, weights):
         cut.add(smallest_u)
         # Update the new crossing edges.
         for v in g.graph[smallest_u]:
-            if get_weight(smallest_u, v, weights) < dist[v]:
+            if v not in cut and get_weight(smallest_u, v, weights) < dist[v]:
                 dist[v] = get_weight(smallest_u, v, weights)
                 hd[v] = get_weight(smallest_u, v, weights)
                 parent[v] = smallest_u
