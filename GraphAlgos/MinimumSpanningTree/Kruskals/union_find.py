@@ -6,15 +6,14 @@
 
 class UnionFind:
 
-    parent = {}
-    rank = {}
-
     # PURPOSE
     # Construct a UnionFind object from a list of items. Each item begins
     # as its own disjoint set.
     # SIGNATURE
     # __init__ :: Self, List => UnionFind
     def __init__(self, items):
+        self.parent = {}
+        self.rank = {}
         for item in items:
             self.parent[item] = item
             self.rank[item] = 0
