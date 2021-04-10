@@ -31,8 +31,10 @@ def prims(g, weights):
                 if dist[u] < smallest_dist:
                     smallest_u = u
                     smallest_dist = dist[u]
+        # Pulling the minimum into the already processed set.
         cut[smallest_u] = True
         cut_count += 1
+        # Updating distances with the new crossing edges.
         for v in g[smallest_u]:
             if weights[smallest_u][v] < dist[v]:
                 dist[v] = weights[smallest_u][v]
