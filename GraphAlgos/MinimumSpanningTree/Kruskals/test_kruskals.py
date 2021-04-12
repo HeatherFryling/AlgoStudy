@@ -1,6 +1,6 @@
 from kruskals import *
 
-def test_prims_custom():
+def test_kruskals_custom():
     g1_custom = Graph()
     g1_custom.add_edge(1, 2)
     g1_custom.add_edge(1, 3)
