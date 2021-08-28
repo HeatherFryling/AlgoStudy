@@ -1,3 +1,4 @@
+# O(n) time | O(1) space -- Number of letters in the alphabet.
 def palindrome_permutation(s):
     counts = {}
     for c in s:

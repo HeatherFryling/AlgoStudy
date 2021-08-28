@@ -1,3 +1,4 @@
+# O(n) time | O(n) space
 def string_compression(s):
     count_arr = []
     count_arr.append(s[0])

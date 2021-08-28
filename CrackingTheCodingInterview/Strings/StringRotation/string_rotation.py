@@ -1,3 +1,4 @@
+# O(n + m) time where n i len(s1) and m is len(s2) | O(m + m) space
 def string_rotation(s1, s2):
     if len(s1) != len(s2):
         return False
