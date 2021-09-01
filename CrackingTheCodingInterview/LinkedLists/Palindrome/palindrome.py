@@ -1,6 +1,7 @@
 from LinkedList import LinkedList
 from Node import Node
 
+# O(n) time | O(n) space
 def is_palindrome(lst):
     length = get_length(lst)
     print(length)

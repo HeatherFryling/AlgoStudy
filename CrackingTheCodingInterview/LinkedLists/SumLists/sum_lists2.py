@@ -1,6 +1,10 @@
 from LinkedList import LinkedList
 from Node import Node
 
+# n = the number of items in the longer list.
+# O(n) time for equalizing the lists and doing the addition.
+# O(n) space on the stack.
+# O(n) space for the returned list.
 # This time the lists are in the opposite order.
 def sum_linked_list(l1, l2):
     equalize_list_lengths(l1, l2)
