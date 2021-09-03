@@ -22,35 +22,35 @@ class AnimalShelter:
 
     # O(n) time | O(n) space
     def dequeue_cat(self):
-        dog_q = deque()
+        dog_stack = deque()
         if len(self.q) == 0:
             raise ValueError('Sorry, the shelter is empty!')
 
         curr = self.q.popleft()
         while (curr != None and curr[ : 3] != self.ANIMALS[0]):
-            dog_q.append(curr)
+            dog_stack.append(curr)
             curr = self.q.popleft()
         
         # Put the dogs back in their correct position.
-        while (len(dog_q) > 0):
-            self.q.appendleft(dog_q.pop())
+        while (len(dog_stack) > 0):
+            self.q.appendleft(dog_stack.pop())
 
         return curr
 
     # O(n) time | O(n) space
     def dequeue_dog(self):
-        cat_q = deque()
+        cat_stack = deque()
         if len(self.q) == 0:
             raise ValueError('Sorry, the shelter is empty!')
 
         curr = self.q.popleft()
         while (curr != None and curr[ : 3] != self.ANIMALS[1]):
-            cat_q.append(curr)
+            cat_stack.append(curr)
             curr = self.q.popleft()
         
         # Put the dogs back in their correct position.
-        while (len(cat_q) > 0):
-            self.q.appendleft(cat_q.pop())
+        while (len(cat_stack) > 0):
+            self.q.appendleft(cat_stack.pop())
 
         return curr
 
