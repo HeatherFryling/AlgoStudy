@@ -33,7 +33,7 @@ class AnimalShelter:
         
         # Put the dogs back in their correct position.
         while (len(dog_q) > 0):
-            self.q.appendleft(dog_q.popleft())
+            self.q.appendleft(dog_q.pop())
 
         return curr
 
@@ -50,17 +50,22 @@ class AnimalShelter:
         
         # Put the dogs back in their correct position.
         while (len(cat_q) > 0):
-            self.q.appendleft(cat_q.popleft())
+            self.q.appendleft(cat_q.pop())
 
         return curr
 
 s = AnimalShelter()
-animals = ['cat1', 'cat2', 'dog1', 'dog2', 'cat3']
+animals = ['cat1', 'cat2', 'dog1', 'dog2', 'dog3', 'cat3']
 for animal in animals:
     s.enqueue(animal)
 print(s.q)
 print(s.dequeue_any())
+print(s.q)
 print(s.dequeue_dog())
+print(s.q)
+print(s.dequeue_cat())
+print(s.q)
+print(s.dequeue_cat())
 print(s.q)
 
 
