@@ -12,7 +12,6 @@ def toposort(edges):
          if state[u] == -1:
             dfs_topo(u, graph, state, topo_sorted)
     topo_sorted.reverse()
-    print(state)
     return topo_sorted
 
 def dfs_topo(u, graph, state, topo_sorted):

@@ -21,5 +21,7 @@ def path_between1(s, e, graph):
 test_true = [[1, 2], [], [3], [4, 5, 6, 7], [], [], [3], [1]]
 test_false = [[1, 2], [], [3], [4, 5, 7], [], [], [3], [1]]
 
+test_true = {'a' : ['b', 'c', 'd'], 'b' : ['a']}
+
 print(path_between1(0, 6, test_true))
 print(path_between1(0, 6, test_false))

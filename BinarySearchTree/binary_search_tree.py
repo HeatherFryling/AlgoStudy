@@ -1,3 +1,5 @@
+# Still in progress for cleaning up.
+
 # Heather Fryling
 # 1/25/2021
 # Binary Search Tree Implementation

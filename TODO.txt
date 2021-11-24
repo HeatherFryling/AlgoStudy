@@ -6,3 +6,5 @@
 3. Optional:
     * Implement karatsuba in DivideAndConquer
     * Implement Strassens in DivideAndConquer
+4. Document and formally test CrackingTheCodingInterview.
+5. Finish combinations in brute force.
