@@ -8,6 +8,15 @@
 # 2 steps, or 3 steps.
 # SIGNATURE
 # nsteps :: Integer => List[List[Integer]]
+# TIME AND SPACE COMPLEXITY
+# Time is O(n3^2n) == O(n9^n).
+# Branching factor is 3. Depth is n (worst case). => 3^n
+# Have to copy each partial result, which is max length of n.
+# => Worst case of n * 3^n work to copy.
+# 
+# Space is O(n^2 * 3^n)
+# Up to n3^n space per frame for the results.
+# Height of the recursion is n.
 def nsteps(n):
     if n < 0:
         return []
@@ -42,13 +51,4 @@ def stair_helper(n, current_step):
         l.insert(0, current_step)
     
     return result
-
-print(nsteps(0))
-
-assert([[]] == nsteps(0))
-assert([[0]] == nsteps(1))
-assert([[0, 1], [0]] == nsteps(2))
-assert([[0, 1, 2], [0, 1], [0, 2], [0]] == nsteps(3))
-assert([[0, 1, 2, 3], [0, 1, 2], [0, 1, 3], [0, 1], [0, 2, 3], [0, 2], [0, 3]] == nsteps(4))
-print("Passed all tests.")
 

@@ -28,6 +28,3 @@ def inner_loop(arr, i, j, res):
         return
     res.append(arr[i][j])
     inner_loop(arr, i, j + 1, res)
-
-arr = [[1,2,3], [4, 5], [6], [], [7, 8, 9, 10]]
-print(flatten(arr))
