@@ -35,5 +35,7 @@ def ts_recursive(nums, target, path, res, idx):
 nums = [1, 2, 3, 4]
 target = 4
 
-print(target_sum(nums, target))
+ans = [[4], [2, 2], [1, 3], [1, 1, 2], [1, 1, 1, 1]]
+
+assert(ans == target_sum(nums, target))
     
