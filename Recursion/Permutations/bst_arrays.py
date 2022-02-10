@@ -13,9 +13,9 @@
 
 # Time Complexity:
 # Depth: logn
-# Branching Factor: 2
+# Branching Factor: n
 # Work per call: n
-# O(logn2^n)
+# O(n^nlogn)
 
 # Space Complexity:
 # O(n!)
